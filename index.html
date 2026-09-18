@@ -6,85 +6,104 @@
     <title>知山田社區｜雲端門禁教學 SOP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
-        body { font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif; background-color: #f9fafb; }
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@600;900&display=swap');
         
-        /* Custom Checkbox Animation */
-        .chk-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .chk-btn.active { background-color: #2563eb; border-color: #2563eb; color: white; transform: scale(1.05); }
-        .step-card { transition: all 0.3s ease; }
-        .step-card.done { opacity: 0.65; background-color: #f8fafc; border-color: #e2e8f0; }
-        .step-card.done .step-title { text-decoration: line-through; color: #94a3b8; }
+        body { 
+            font-family: 'Noto Sans TC', sans-serif; 
+            background-color: #ebf0ec; /* 淺灰綠背景 */
+            background-image: radial-gradient(#d1dfd5 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
         
-        /* Timeline line styling */
+        h1, h2, .serif-font { font-family: 'Noto Serif TC', serif; }
+        
+        /* Custom Checkbox */
+        .chk-btn { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .chk-btn.active { background-color: #065f46; border-color: #065f46; color: white; transform: scale(1.05); }
+        
+        /* Step Cards */
+        .step-card { 
+            transition: all 0.4s ease; 
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .step-card:hover { transform: translateY(-2px); box-shadow: 0 10px 25px -5px rgba(6, 95, 70, 0.1); }
+        .step-card.done { opacity: 0.6; background: rgba(245, 248, 246, 0.8); border-color: #d1dfd5; }
+        .step-card.done .step-title { text-decoration: line-through; color: #9ca3af; }
+        
+        /* Timeline */
         .timeline-container::before {
             content: ''; position: absolute; top: 0; bottom: 0; left: 1.25rem;
-            width: 2px; background: #e5e7eb; z-index: 0;
+            width: 2px; background: #a7f3d0; z-index: 0;
         }
         @media (min-width: 768px) {
             .timeline-container::before { left: 1.5rem; }
         }
     </style>
 </head>
-<body class="text-gray-800 antialiased selection:bg-blue-200 selection:text-blue-900">
+<body class="text-gray-800 antialiased selection:bg-emerald-200 selection:text-emerald-900 min-h-screen flex flex-col">
 
-    <!-- Header Section -->
-    <header class="bg-white border-b border-gray-200 pt-16 pb-12 px-6 text-center relative overflow-hidden">
-        <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#2563eb 1px, transparent 1px); background-size: 20px 20px;"></div>
+    <!-- Header Section with Mountain Silhouette -->
+    <header class="relative bg-emerald-950 pt-20 pb-28 px-6 text-center overflow-hidden">
+        <!-- Mountain SVG Backgrounds -->
+        <svg class="absolute bottom-0 left-0 w-full h-auto opacity-30 text-emerald-800" viewBox="0 0 1440 320" preserveAspectRatio="none" style="min-height: 120px;"><path fill="currentColor" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,192C672,181,768,139,864,138.7C960,139,1056,181,1152,197.3C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+        <svg class="absolute bottom-0 left-0 w-full h-auto opacity-50 text-emerald-900" viewBox="0 0 1440 320" preserveAspectRatio="none" style="min-height: 100px;"><path fill="currentColor" fill-opacity="1" d="M0,128L60,149.3C120,171,240,213,360,208C480,203,600,149,720,149.3C840,149,960,203,1080,218.7C1200,235,1320,213,1380,202.7L1440,192L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path></svg>
+        <svg class="absolute bottom-0 left-0 w-full h-auto text-emerald-950 translate-y-1" viewBox="0 0 1440 320" preserveAspectRatio="none" style="min-height: 60px;"><path fill="#ebf0ec" fill-opacity="1" d="M0,288L120,277.3C240,267,480,245,720,245.3C960,245,1200,267,1320,277.3L1440,288L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>
+
         <div class="relative z-10 max-w-2xl mx-auto">
-            <span class="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 text-xs font-bold tracking-widest uppercase mb-4 border border-blue-100">Smart Community</span>
-            <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight mb-3">知山田社區</h1>
-            <h2 class="text-xl md:text-2xl font-bold text-gray-500">雲端門禁系統教學 SOP</h2>
-            <p class="mt-4 text-sm text-gray-500">跟著時間軸一步步完成設定，享受智慧便利的生活。</p>
+            <h1 class="text-4xl md:text-5xl font-black text-white tracking-widest mb-4" style="text-shadow: 0 4px 12px rgba(0,0,0,0.2);">知 山 田</h1>
+            <h2 class="text-xl md:text-2xl font-bold text-emerald-100/90 tracking-wide">雲端門禁系統教學 SOP</h2>
+            <p class="mt-5 text-sm text-emerald-200/70">回歸自然，享受智慧與安心的森活體驗。</p>
         </div>
     </header>
 
     <!-- Sticky Progress Bar -->
-    <div class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 px-6 py-4 shadow-sm">
+    <div class="sticky top-0 z-50 bg-[#ebf0ec]/90 backdrop-blur-md border-b border-emerald-900/10 px-6 py-4 shadow-sm">
         <div class="max-w-2xl mx-auto">
             <div class="flex items-center justify-between mb-2">
-                <span class="text-sm font-bold text-blue-600" id="progress-pct">進度 0%</span>
-                <span class="text-sm font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full" id="progress-count">0 / 12</span>
+                <span class="text-sm font-bold text-emerald-800" id="progress-pct">設定進度 0%</span>
+                <span class="text-xs font-bold text-emerald-700 bg-emerald-100 px-2 py-1 rounded-full border border-emerald-200" id="progress-count">0 / 12</span>
             </div>
-            <div class="w-full bg-gray-100 rounded-full h-2.5 overflow-hidden">
-                <div class="bg-blue-600 h-full rounded-full transition-all duration-500 ease-out" id="progress-bar" style="width: 0%"></div>
+            <div class="w-full bg-emerald-200/50 rounded-full h-2 overflow-hidden">
+                <div class="bg-emerald-600 h-full rounded-full transition-all duration-700 ease-out relative" id="progress-bar" style="width: 0%">
+                    <div class="absolute inset-0 bg-white/20 w-full h-full" style="background-image: linear-gradient(45deg, rgba(255,255,255,.15) 25%, transparent 25%, transparent 50%, rgba(255,255,255,.15) 50%, rgba(255,255,255,.15) 75%, transparent 75%, transparent); background-size: 1rem 1rem;"></div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Completion Celebration -->
     <div id="celebration" class="max-w-2xl mx-auto mt-8 px-6 hidden">
-        <div class="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-6 text-white text-center shadow-lg transform transition-all">
-            <div class="text-4xl mb-2">🎉</div>
-            <h3 class="text-xl font-bold mb-1">恭喜完成所有步驟！</h3>
-            <p class="text-sm opacity-90">您已成功設定並測試完所有的門禁功能。</p>
+        <div class="bg-emerald-800 rounded-2xl p-6 text-white text-center shadow-xl border border-emerald-700 relative overflow-hidden">
+            <div class="absolute -right-10 -top-10 opacity-10 text-9xl">🌿</div>
+            <div class="relative z-10">
+                <h3 class="text-2xl font-bold mb-2 serif-font tracking-wide">設定圓滿完成</h3>
+                <p class="text-sm text-emerald-100">您已成功設定並測試完所有的門禁功能，歡迎回家。</p>
+            </div>
         </div>
     </div>
 
     <!-- Timeline Content -->
-    <main class="max-w-2xl mx-auto px-6 py-12">
+    <main class="max-w-2xl mx-auto px-6 py-10 flex-grow">
         <div class="relative timeline-container pl-2 md:pl-0" id="timeline">
 
             <!-- Phase 1 -->
-            <div class="mb-12 relative z-10 pl-10 md:pl-12">
-                <div class="absolute w-10 h-10 bg-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-gray-50 border border-gray-200 shadow-sm text-xl">📲</div>
-                <h3 class="text-xl font-extrabold text-gray-900 mb-1">第一階段：App 下載與註冊</h3>
-                <p class="text-sm text-gray-500 mb-6 font-medium">準備好您的智慧型手機，安裝必備的應用程式。</p>
+            <div class="mb-14 relative z-10 pl-10 md:pl-12">
+                <div class="absolute w-10 h-10 bg-emerald-800 text-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-[#ebf0ec] shadow-md text-sm font-bold serif-font">壹</div>
+                <h3 class="text-xl font-bold text-emerald-950 mb-1 serif-font tracking-wide">App 下載與註冊</h3>
+                <p class="text-sm text-emerald-700/80 mb-5 font-medium">準備好您的智慧型手機，安裝必備的應用程式。</p>
                 
                 <div class="space-y-4">
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="1">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="1">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(1)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(1)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">1. 下載 App 並完成註冊</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">1. 下載 App 並完成註冊</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">Guarding Vision</span>
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-pink-50 text-pink-600 border border-pink-100">OmniCloud</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-50 text-cyan-700 border border-cyan-200">Guarding Vision</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OmniCloud</span>
                                 </div>
-                                <p class="text-sm text-gray-600">下載「Guarding Vision」及「OmniCloud」兩款 App，並完成帳號註冊。</p>
-                                <div class="mt-3 bg-gray-50 rounded-lg p-3 text-xs text-gray-600 border border-gray-100 flex gap-2">
-                                    <span>💡</span><p>兩款 App 在 App Store 與 Google Play 皆可下載。</p>
-                                </div>
+                                <p class="text-sm text-gray-600 leading-relaxed">下載「Guarding Vision」及「OmniCloud」兩款 App，並完成帳號註冊。</p>
                             </div>
                         </div>
                     </div>
@@ -92,25 +111,22 @@
             </div>
 
             <!-- Phase 2 -->
-            <div class="mb-12 relative z-10 pl-10 md:pl-12">
-                <div class="absolute w-10 h-10 bg-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-gray-50 border border-gray-200 shadow-sm text-xl">🔗</div>
-                <h3 class="text-xl font-extrabold text-gray-900 mb-1">第二階段：室內平板綁定</h3>
-                <p class="text-sm text-gray-500 mb-6 font-medium">將您的手機 App 與家中的對講機平板連線。</p>
+            <div class="mb-14 relative z-10 pl-10 md:pl-12">
+                <div class="absolute w-10 h-10 bg-emerald-800 text-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-[#ebf0ec] shadow-md text-sm font-bold serif-font">貳</div>
+                <h3 class="text-xl font-bold text-emerald-950 mb-1 serif-font tracking-wide">室內平板綁定</h3>
+                <p class="text-sm text-emerald-700/80 mb-5 font-medium">將您的手機 App 與家中的對講機平板連線。</p>
                 
                 <div class="space-y-4">
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="2">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="2">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(2)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(2)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">2. 綁定平板序號</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">2. 綁定平板序號</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">Guarding Vision</span>
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-orange-50 text-orange-600 border border-orange-100">室內平板</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-50 text-cyan-700 border border-cyan-200">Guarding Vision</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">室內木紋平板</span>
                                 </div>
-                                <p class="text-sm text-gray-600">到室內平板上找到設備序號，將序號綁定至 Guarding Vision App。</p>
-                                <div class="mt-3 bg-gray-50 rounded-lg p-3 text-xs text-gray-600 border border-gray-100 flex gap-2">
-                                    <span>💡</span><p>序號通常在平板的「設定」或「關於」頁面中可以找到。</p>
-                                </div>
+                                <p class="text-sm text-gray-600 leading-relaxed">到室內平板上找到設備序號，將其綁定至 Guarding Vision App。</p>
                             </div>
                         </div>
                     </div>
@@ -118,37 +134,37 @@
             </div>
 
             <!-- Phase 3 -->
-            <div class="mb-12 relative z-10 pl-10 md:pl-12">
-                <div class="absolute w-10 h-10 bg-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-gray-50 border border-gray-200 shadow-sm text-xl">🛡️</div>
-                <h3 class="text-xl font-extrabold text-gray-900 mb-1">第三階段：保全與安全功能測試</h3>
-                <p class="text-sm text-gray-500 mb-6 font-medium">確保居家安全警報系統運作正常。</p>
+            <div class="mb-14 relative z-10 pl-10 md:pl-12">
+                <div class="absolute w-10 h-10 bg-emerald-800 text-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-[#ebf0ec] shadow-md text-sm font-bold serif-font">參</div>
+                <h3 class="text-xl font-bold text-emerald-950 mb-1 serif-font tracking-wide">保全與安全功能測試</h3>
+                <p class="text-sm text-emerald-700/80 mb-5 font-medium">確保居家安全警報系統運作正常。</p>
                 
                 <div class="space-y-4">
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="3">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="3">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(3)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(3)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">3. 磁簧（保全）功能測試</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">3. 磁簧（保全）功能測試</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">Guarding Vision</span>
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-orange-50 text-orange-600 border border-orange-100">室內平板</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-50 text-cyan-700 border border-cyan-200">Guarding Vision</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">室內木紋平板</span>
                                 </div>
-                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1">
+                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1.5">
                                     <li>在平板上操作「上保全」</li>
                                     <li>在手機 App 上操作「上保全」</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="4">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="4">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(4)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(4)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">4. 緊急求救功能測試</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">4. 緊急求救功能測試</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">Guarding Vision</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-50 text-cyan-700 border border-cyan-200">Guarding Vision</span>
                                 </div>
-                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1">
+                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1.5">
                                     <li>確認手機是否收到提醒通知</li>
                                     <li>確認平板是否收到提醒通知</li>
                                 </ul>
@@ -159,50 +175,47 @@
             </div>
 
             <!-- Phase 4 -->
-            <div class="mb-12 relative z-10 pl-10 md:pl-12">
-                <div class="absolute w-10 h-10 bg-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-gray-50 border border-gray-200 shadow-sm text-xl">🚪</div>
-                <h3 class="text-xl font-extrabold text-gray-900 mb-1">第四階段：小門口機功能測試</h3>
-                <p class="text-sm text-gray-500 mb-6 font-medium">設定您家門口的專屬人臉辨識與門鈴功能。</p>
+            <div class="mb-14 relative z-10 pl-10 md:pl-12">
+                <div class="absolute w-10 h-10 bg-emerald-800 text-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-[#ebf0ec] shadow-md text-sm font-bold serif-font">肆</div>
+                <h3 class="text-xl font-bold text-emerald-950 mb-1 serif-font tracking-wide">小門口機功能測試</h3>
+                <p class="text-sm text-emerald-700/80 mb-5 font-medium">設定您專屬的人臉辨識與門鈴功能。</p>
                 
                 <div class="space-y-4">
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="5">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="5">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(5)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(5)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">5. 門鈴測試</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">5. 門鈴測試</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-orange-50 text-orange-600 border border-orange-100">小門口機</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">小門口機</span>
                                 </div>
-                                <p class="text-sm text-gray-600 mb-1">按下小門口機門鈴，確認：</p>
-                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1">
+                                <p class="text-sm text-gray-600 mb-2">按下門鈴後，確認：</p>
+                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1.5">
                                     <li>手機是否收到來電／提醒</li>
                                     <li>平板是否收到來電／提醒</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="6">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="6">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(6)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(6)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">6. 人臉辨識設定</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">6. 人臉辨識設定</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-orange-50 text-orange-600 border border-orange-100">小門口機</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">小門口機</span>
                                 </div>
                                 <p class="text-sm text-gray-600">在小門口機設定人臉，確認電子鎖可以順利開啟。</p>
-                                <div class="mt-3 bg-gray-50 rounded-lg p-3 text-xs text-gray-600 border border-gray-100 flex gap-2">
-                                    <span>💡</span><p>建議在光線充足的環境下正面拍攝，提高辨識成功率。</p>
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="7">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="7">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(7)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(7)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">7. 遠端開門測試</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">7. 遠端開門測試</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">Guarding Vision</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-cyan-50 text-cyan-700 border border-cyan-200">Guarding Vision</span>
                                 </div>
                                 <p class="text-sm text-gray-600">手機接聽門口機來電後，試用遠端開門功能。</p>
                             </div>
@@ -212,47 +225,47 @@
             </div>
 
             <!-- Phase 5 -->
-            <div class="mb-12 relative z-10 pl-10 md:pl-12">
-                <div class="absolute w-10 h-10 bg-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-gray-50 border border-gray-200 shadow-sm text-xl">🏢</div>
-                <h3 class="text-xl font-extrabold text-gray-900 mb-1">第五階段：公共門設定</h3>
-                <p class="text-sm text-gray-500 mb-6 font-medium">開通並測試社區大廳與公共設施的進出權限。</p>
+            <div class="mb-14 relative z-10 pl-10 md:pl-12">
+                <div class="absolute w-10 h-10 bg-emerald-800 text-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-[#ebf0ec] shadow-md text-sm font-bold serif-font">伍</div>
+                <h3 class="text-xl font-bold text-emerald-950 mb-1 serif-font tracking-wide">大廳與公共門設定</h3>
+                <p class="text-sm text-emerald-700/80 mb-5 font-medium">開通並測試社區公設的進出權限。</p>
                 
                 <div class="space-y-4">
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="8">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="8">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(8)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(8)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">8. 綁定公共門金鑰</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">8. 綁定公共門金鑰</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-pink-50 text-pink-600 border border-pink-100">OmniCloud</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OmniCloud</span>
                                 </div>
                                 <p class="text-sm text-gray-600">將公共門金鑰綁定至 OmniCloud 手機 App。</p>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="9">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="9">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(9)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(9)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">9. 上傳人臉至帳號</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">9. 上傳人臉至帳號</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-pink-50 text-pink-600 border border-pink-100">OmniCloud</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OmniCloud</span>
                                 </div>
-                                <p class="text-sm text-gray-600">進入「房屋管理」功能，上傳人臉照片至所屬帳號。</p>
+                                <p class="text-sm text-gray-600">進入「房屋管理」功能，上傳人臉照片。</p>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="10">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="10">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(10)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(10)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">10. 公共門通行測試</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">10. 公共門通行測試</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-pink-50 text-pink-600 border border-pink-100">OmniCloud</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OmniCloud</span>
                                 </div>
-                                <p class="text-sm text-gray-600 mb-1">確認以下區域皆可順利進入：</p>
-                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1">
-                                    <li>公共門</li>
+                                <p class="text-sm text-gray-600 mb-2">確認以下區域皆可順利進入：</p>
+                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1.5">
+                                    <li>社區大門 / 公共門</li>
                                     <li>環保室</li>
                                 </ul>
                             </div>
@@ -263,36 +276,35 @@
 
             <!-- Phase 6 -->
             <div class="mb-4 relative z-10 pl-10 md:pl-12">
-                <div class="absolute w-10 h-10 bg-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-gray-50 border border-gray-200 shadow-sm text-xl">⭐</div>
-                <h3 class="text-xl font-extrabold text-gray-900 mb-1">第六階段：進階功能教學</h3>
-                <p class="text-sm text-gray-500 mb-6 font-medium">學習如何為訪客開門以及使用智取櫃。</p>
+                <div class="absolute w-10 h-10 bg-emerald-800 text-white rounded-full -left-5 md:-left-3 flex items-center justify-center ring-4 ring-[#ebf0ec] shadow-md text-sm font-bold serif-font">陸</div>
+                <h3 class="text-xl font-bold text-emerald-950 mb-1 serif-font tracking-wide">進階生活功能</h3>
+                <p class="text-sm text-emerald-700/80 mb-5 font-medium">學習訪客邀請與智取櫃的使用方式。</p>
                 
                 <div class="space-y-4">
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="11">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="11">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(11)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(11)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">11. 訪客設定教學</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">11. 訪客設定教學</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-pink-50 text-pink-600 border border-pink-100">OmniCloud</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OmniCloud</span>
                                 </div>
-                                <p class="text-sm text-gray-600 mb-1">練習使用 OmniCloud App：</p>
-                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1">
+                                <ul class="text-sm text-gray-600 list-disc ml-4 space-y-1.5">
                                     <li>設定訪客通行權限</li>
                                     <li>開立訪客通行單（出單訪客）</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="step-card bg-white border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md" data-step="12">
+                    <div class="step-card border border-emerald-900/10 rounded-xl p-5 shadow-sm" data-step="12">
                         <div class="flex gap-4">
-                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded-md border-2 border-gray-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(12)">✓</button>
+                            <button class="chk-btn mt-1 shrink-0 w-6 h-6 rounded border-2 border-emerald-300 flex items-center justify-center text-transparent focus:outline-none" onclick="toggleStep(12)">✓</button>
                             <div>
-                                <h4 class="text-base font-bold text-gray-900 step-title">12. 取物櫃功能教學</h4>
+                                <h4 class="text-base font-bold text-emerald-950 step-title">12. 取物櫃功能教學</h4>
                                 <div class="flex flex-wrap gap-2 mt-2 mb-3">
-                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-pink-50 text-pink-600 border border-pink-100">OmniCloud</span>
+                                    <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">OmniCloud</span>
                                 </div>
-                                <p class="text-sm text-gray-600">使用手機 App 操作取物櫃功能。</p>
+                                <p class="text-sm text-gray-600">使用手機 App 實際操作一次智取櫃功能。</p>
                             </div>
                         </div>
                     </div>
@@ -303,29 +315,27 @@
         
         <!-- Reset Button -->
         <div class="mt-16 text-center">
-            <button onclick="resetAll()" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-gray-500 bg-white border border-gray-300 rounded-full hover:bg-gray-50 hover:text-red-600 hover:border-red-200 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-200">
+            <button onclick="resetAll()" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-bold text-emerald-800/60 bg-transparent border border-emerald-800/30 rounded-full hover:bg-emerald-50 hover:text-emerald-900 transition-colors focus:outline-none">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
-                重置所有進度
+                重新開始設定
             </button>
         </div>
     </main>
     
-    <footer class="bg-white border-t border-gray-200 py-8 mt-auto">
-        <p class="text-center text-xs font-bold text-gray-400 tracking-wide uppercase">家鼎建設 ✕ 知山田社區</p>
+    <footer class="mt-auto border-t border-emerald-900/10 py-8 text-center text-xs font-bold text-emerald-800/50 tracking-widest serif-font">
+        家鼎建設 ✕ 知山田社區
     </footer>
 
     <script>
         const TOTAL_STEPS = 12;
-        const STORAGE_KEY = 'zhishantian_sop_v3_timeline';
+        const STORAGE_KEY = 'zhishantian_sop_v4_nature';
         let checked = {};
 
-        // 讀取進度
         try {
             const saved = localStorage.getItem(STORAGE_KEY);
             if (saved) checked = JSON.parse(saved);
         } catch(e) {}
 
-        // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             for (let i = 1; i <= TOTAL_STEPS; i++) {
                 if (checked[i]) updateUI(i, true);
@@ -333,7 +343,6 @@
             updateProgress();
         });
 
-        // 點擊切換
         function toggleStep(n) {
             checked[n] = !checked[n];
             updateUI(n, checked[n]);
@@ -341,7 +350,6 @@
             updateProgress();
         }
 
-        // 更新單一步驟 UI
         function updateUI(n, isChecked) {
             const card = document.querySelector(`.step-card[data-step="${n}"]`);
             const btn = card.querySelector('.chk-btn');
@@ -354,13 +362,12 @@
             }
         }
 
-        // 更新進度條
         function updateProgress() {
             const count = Object.values(checked).filter(Boolean).length;
             const pct = Math.round((count / TOTAL_STEPS) * 100);
             
             document.getElementById('progress-bar').style.width = `${pct}%`;
-            document.getElementById('progress-pct').textContent = `進度 ${pct}%`;
+            document.getElementById('progress-pct').textContent = `設定進度 ${pct}%`;
             document.getElementById('progress-count').textContent = `${count} / ${TOTAL_STEPS}`;
             
             const banner = document.getElementById('celebration');
@@ -372,7 +379,6 @@
             }
         }
 
-        // 重置
         function resetAll() {
             if (!confirm('確定要清除所有打勾進度嗎？')) return;
             checked = {};
