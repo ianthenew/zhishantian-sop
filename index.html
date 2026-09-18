@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>知山田社區｜雲端門禁教學 SOP</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",sans-serif;background:#f8fafc;color:#1e293b;line-height:1.6}
+
+.header{background:linear-gradient(135deg,#1e3a5f,#2563eb,#3b82f6);color:#fff;padding:40px 20px 48px;text-align:center;position:relative}
+.header::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:28px;background:#f8fafc;border-radius:24px 24px 0 0}
+.header h1{font-size:26px;font-weight:700;letter-spacing:1px;margin-bottom:4px}
+.header p{font-size:14px;opacity:.85}
+
+.progress-wrap{max-width:640px;margin:-14px auto 20px;padding:0 20px;position:relative;z-index:2}
+.progress-card{background:#fff;border-radius:16px;box-shadow:0 8px 24px rgba(0,0,0,.08);padding:18px 22px;display:flex;align-items:center;gap:14px}
+.progress-bar-bg{flex:1;height:10px;background:#e2e8f0;border-radius:99px;overflow:hidden}
+.progress-bar-fill{height:100%;width:0%;background:linear-gradient(90deg,#2563eb,#16a34a);border-radius:99px;transition:width .5s ease}
+.progress-text{font-size:14px;font-weight:700;color:#2563eb;white-space:nowrap}
+
+.container{max-width:640px;margin:0 auto;padding:0 20px 60px}
+
+.completion{display:none;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;text-align:center;padding:24px;border-radius:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.completion.show{display:block}
+.completion h2{font-size:22px;margin-bottom:4px}
+.completion p{font-size:14px;opacity:.9}
+
+details{margin-bottom:12px;border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.07)}
+summary{display:flex;align-items:center;gap:12px;padding:16px 20px;cursor:pointer;list-style:none;user-select:none;-webkit-user-select:none;border-radius:16px;transition:background .15s}
+summary::-webkit-details-marker{display:none}
+summary::marker{display:none}
+summary:hover{background:#f8fafc}
+details[open] summary{border-radius:16px 16px 0 0;border-bottom:1px solid #e2e8f0}
+
+.ph-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.ph-info{flex:1}
+.ph-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:#94a3b8}
+.ph-title{font-size:16px;font-weight:600}
+.ph-badge{font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;background:#f1f5f9;color:#94a3b8;white-space:nowrap}
+.ph-badge.done{background:#dcfce7;color:#16a34a}
+.ph-arrow{font-size:14px;color:#94a3b8;transition:transform .25s}
+details[open] .ph-arrow{transform:rotate(180deg)}
+
+.steps{padding:4px 20px 16px}
+.step{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f1f5f9;align-items:flex-start}
+.step:last-child{border-bottom:none}
+
+.chk{width:28px;height:28px;border:2.5px solid #cbd5e1;border-radius:8px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:16px;color:transparent;background:#fff;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.chk:active{transform:scale(.9)}
+.chk.on{background:#16a34a;border-color:#16a34a;color:#fff}
+
+.step-body{flex:1;min-width:0}
+.step-num{font-size:11px;font-weight:700;color:#2563eb;margin-bottom:2px}
+.step-name{font-size:15px;font-weight:600;margin-bottom:3px}
+.step.done .step-name{text-decoration:line-through;color:#94a3b8}
+.step-desc{font-size:13px;color:#64748b;line-height:1.55}
+.step-desc ul{margin:4px 0 0 18px}
+
+.tag{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:6px;margin-right:3px;margin-bottom:4px}
+.tg{background:#ede9fe;color:#7c3aed}
+.to{background:#fce7f3;color:#db2777}
+.td{background:#fff7ed;color:#ea580c}
+
+.tip{background:#fefce8;border-left:4px solid #facc15;padding:8px 12px;border-radius:0 8px 8px 0;margin-top:8px;font-size:12px;color:#854d0e}
+
+.reset-wrap{text-align:center;margin-top:28px}
+.reset-btn{background:none;border:2px solid #e2e8f0;color:#94a3b8;padding:10px 28px;border-radius:99px;font-size:14px;cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
+.reset-btn:hover,.reset-btn:active{border-color:#ef4444;color:#ef4444}
+
+.footer{text-align:center;padding:20px;font-size:12px;color:#94a3b8}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏠 知山田社區</h1>
+  <p>雲端門禁系統教學 SOP</p>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-card">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="pFill"></div></div>
+    <div class="progress-text" id="pText">0 / 12</div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="completion" id="cBanner"><h2>🎉 全部完成！</h2><p>恭喜您已完成所有門禁系統設定與測試</p></div>
+
+  <!-- 第一階段 -->
+  <details open>
+    <summary>
+      <div class="ph-icon" style="background:#dbeafe">📲</div>
+      <div class="ph-info"><div class="ph-label">第一階段</div><div class="ph-title">App 下載與註冊</div></div>
+      <span class="ph-badge" data-b="1">0/1</span>
+      <span class="ph-arrow">▼</span>
+    </summary>
+    <div class="steps">
+      <div class="step" data-s="1">
+        <div class="chk" onclick="tog(1)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 1</div>
+          <div class="step-name">下載 App 並完成註冊</div>
+          <div class="step-desc">
+            <span class="tag tg">Guarding Vision</span><span class="tag to">OmniCloud</span><br>
+            下載「Guarding Vision」及「OmniCloud」兩款 App，並完成帳號註冊。
+            <div class="tip">💡 兩款 App 在 App Store 與 Google Play 皆可下載。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 第二階段 -->
+  <details>
+    <summary>
+      <div class="ph-icon" style="background:#fce7f3">🔗</div>
+      <div class="ph-info"><div class="ph-label">第二階段</div><div class="ph-title">室內平板綁定</div></div>
+      <span class="ph-badge" data-b="2">0/1</span>
+      <span class="ph-arrow">▼</span>
+    </summary>
+    <div class="steps">
+      <div class="step" data-s="2">
+        <div class="chk" onclick="tog(2)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 2</div>
+          <div class="step-name">綁定平板序號</div>
+          <div class="step-desc">
+            <span class="tag tg">Guarding Vision</span><span class="tag td">室內平板</span><br>
+            到室內平板上找到設備序號，將序號綁定至 Guarding Vision App。
+            <div class="tip">💡 序號通常在平板的「設定」或「關於」頁面中可以找到。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 第三階段 -->
+  <details>
+    <summary>
+      <div class="ph-icon" style="background:#dcfce7">🛡️</div>
+      <div class="ph-info"><div class="ph-label">第三階段</div><div class="ph-title">保全與安全功能測試</div></div>
+      <span class="ph-badge" data-b="3">0/2</span>
+      <span class="ph-arrow">▼</span>
+    </summary>
+    <div class="steps">
+      <div class="step" data-s="3">
+        <div class="chk" onclick="tog(3)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 3</div>
+          <div class="step-name">磁簧（保全）功能測試</div>
+          <div class="step-desc">
+            <span class="tag tg">Guarding Vision</span><span class="tag td">室內平板</span>
+            <ul><li>在平板上操作「上保全」</li><li>在手機 App 上操作「上保全」</li></ul>
+          </div>
+        </div>
+      </div>
+      <div class="step" data-s="4">
+        <div class="chk" onclick="tog(4)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 4</div>
+          <div class="step-name">緊急求救功能測試</div>
+          <div class="step-desc">
+            <span class="tag tg">Guarding Vision</span>
+            <ul><li>確認手機是否收到提醒通知</li><li>確認平板是否收到提醒通知</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 第四階段 -->
+  <details>
+    <summary>
+      <div class="ph-icon" style="background:#fff7ed">🚪</div>
+      <div class="ph-info"><div class="ph-label">第四階段</div><div class="ph-title">小門口機功能測試</div></div>
+      <span class="ph-badge" data-b="4">0/3</span>
+      <span class="ph-arrow">▼</span>
+    </summary>
+    <div class="steps">
+      <div class="step" data-s="5">
+        <div class="chk" onclick="tog(5)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 5</div>
+          <div class="step-name">門鈴測試</div>
+          <div class="step-desc">
+            <span class="tag td">小門口機</span><br>
+            按下小門口機門鈴，確認：
+            <ul><li>手機是否收到來電／提醒</li><li>平板是否收到來電／提醒</li></ul>
+          </div>
+        </div>
+      </div>
+      <div class="step" data-s="6">
+        <div class="chk" onclick="tog(6)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 6</div>
+          <div class="step-name">人臉辨識設定</div>
+          <div class="step-desc">
+            <span class="tag td">小門口機</span><br>
+            在小門口機設定人臉，確認電子鎖可以順利開啟。
+            <div class="tip">💡 建議在光線充足的環境下正面拍攝，提高辨識成功率。</div>
+          </div>
+        </div>
+      </div>
+      <div class="step" data-s="7">
+        <div class="chk" onclick="tog(7)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 7</div>
+          <div class="step-name">遠端開門測試</div>
+          <div class="step-desc">
+            <span class="tag tg">Guarding Vision</span><br>
+            手機接聽門口機來電後，試用遠端開門功能。
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 第五階段 -->
+  <details>
+    <summary>
+      <div class="ph-icon" style="background:#ede9fe">🏢</div>
+      <div class="ph-info"><div class="ph-label">第五階段</div><div class="ph-title">公共門設定（OmniCloud）</div></div>
+      <span class="ph-badge" data-b="5">0/3</span>
+      <span class="ph-arrow">▼</span>
+    </summary>
+    <div class="steps">
+      <div class="step" data-s="8">
+        <div class="chk" onclick="tog(8)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 8</div>
+          <div class="step-name">綁定公共門金鑰</div>
+          <div class="step-desc">
+            <span class="tag to">OmniCloud</span><br>
+            將公共門金鑰綁定至 OmniCloud 手機 App。
+          </div>
+        </div>
+      </div>
+      <div class="step" data-s="9">
+        <div class="chk" onclick="tog(9)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 9</div>
+          <div class="step-name">上傳人臉至帳號</div>
+          <div class="step-desc">
+            <span class="tag to">OmniCloud</span><br>
+            進入「房屋管理」功能，上傳人臉照片至所屬帳號。
+          </div>
+        </div>
+      </div>
+      <div class="step" data-s="10">
+        <div class="chk" onclick="tog(10)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 10</div>
+          <div class="step-name">公共門通行測試</div>
+          <div class="step-desc">
+            <span class="tag to">OmniCloud</span><br>
+            確認以下區域皆可順利進入：
+            <ul><li>公共門</li><li>環保室</li></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <!-- 第六階段 -->
+  <details>
+    <summary>
+      <div class="ph-icon" style="background:#fef9c3">⭐</div>
+      <div class="ph-info"><div class="ph-label">第六階段</div><div class="ph-title">進階功能教學</div></div>
+      <span class="ph-badge" data-b="6">0/2</span>
+      <span class="ph-arrow">▼</span>
+    </summary>
+    <div class="steps">
+      <div class="step" data-s="11">
+        <div class="chk" onclick="tog(11)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 11</div>
+          <div class="step-name">訪客設定教學</div>
+          <div class="step-desc">
+            <span class="tag to">OmniCloud</span><br>
+            練習使用 OmniCloud App：
+            <ul><li>設定訪客通行權限</li><li>開立訪客通行單（出單訪客）</li></ul>
+          </div>
+        </div>
+      </div>
+      <div class="step" data-s="12">
+        <div class="chk" onclick="tog(12)">✓</div>
+        <div class="step-body">
+          <div class="step-num">步驟 12</div>
+          <div class="step-name">取物櫃功能教學</div>
+          <div class="step-desc">
+            <span class="tag to">OmniCloud</span><br>
+            使用手機 App 操作取物櫃功能。
+          </div>
+        </div>
+      </div>
+    </div>
+  </details>
+
+  <div class="reset-wrap"><button class="reset-btn" onclick="resetAll()">🔄 重置所有進度</button></div>
+</div>
+<div class="footer">家鼎建設 ✕ 知山田社區｜雲端門禁教學 SOP</div>
+
+<script>
+const T=12,K='zst_sop';
+const ps={1:[1],2:[2],3:[3,4],4:[5,6,7],5:[8,9,10],6:[11,12]};
+let ck={};
+try{const s=localStorage.getItem(K);if(s)ck=JSON.parse(s)}catch(e){}
+for(let i=1;i<=T;i++){if(ck[i])ap(i,true)}
+upd();
+
+function tog(n){ck[n]=!ck[n];ap(n,ck[n]);try{localStorage.setItem(K,JSON.stringify(ck))}catch(e){}upd()}
+function ap(n,v){
+  const s=document.querySelector('[data-s="'+n+'"]');
+  const c=s.querySelector('.chk');
+  if(v){c.classList.add('on');s.classList.add('done')}
+  else{c.classList.remove('on');s.classList.remove('done')}
+}
+function upd(){
+  const cnt=Object.values(ck).filter(Boolean).length;
+  document.getElementById('pFill').style.width=(cnt/T*100)+'%';
+  document.getElementById('pText').textContent=cnt+' / '+T;
+  for(let p=1;p<=6;p++){
+    const st=ps[p],d=st.filter(s=>ck[s]).length;
+    const b=document.querySelector('[data-b="'+p+'"]');
+    b.textContent=d+'/'+st.length;
+    b.classList.toggle('done',d===st.length);
+  }
+  const bn=document.getElementById('cBanner');
+  bn.classList.toggle('show',cnt===T);
+}
+function resetAll(){
+  if(!confirm('確定要重置所有進度嗎？'))return;
+  ck={};for(let i=1;i<=T;i++)ap(i,false);
+  try{localStorage.setItem(K,JSON.stringify(ck))}catch(e){}upd();
+}
+</script>
+</body>
+</html>
